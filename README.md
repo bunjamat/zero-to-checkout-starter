@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MY STORE — Zero to Checkout starter
 
-## Getting Started
+โปรเจกต์ตั้งต้นของคอร์ส **Zero to Checkout (พัฒนาระบบอีคอมเมิร์ซเบื้องต้น)**
+เราจะต่อร้านนี้ไปทีละครั้ง จากหน้าร้านที่ใช้ข้อมูลจำลอง → database จริง → API → ตะกร้า → ชำระเงินสำเร็จ
 
-First, run the development server:
+> **Know the Core · Build the Store** — สั่ง AI ได้ดี ต้องเข้าใจสิ่งที่สั่ง
+
+## เริ่มใช้งาน
+
+ต้องติดตั้ง Git, VS Code และ Bun ก่อน — ดูขั้นตอนเต็มใน setup guide ของคอร์ส
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/bunjamat/zero-to-checkout-starter.git
+cd zero-to-checkout-starter
+bun install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+copy ไฟล์ `.env.example` เป็น `.env` แล้วใส่ connection string ของ Neon
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# macOS / Linux
+cp .env.example .env
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```powershell
+# Windows (PowerShell)
+Copy-Item .env.example .env
+```
 
-## Learn More
+รัน
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+bun run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+เปิด URL ที่ terminal พิมพ์ออกมา (ปกติคือ http://localhost:3000 แต่ถ้า port ไม่ว่างจะเป็นเลขอื่น)
+แล้วลองเปิด `/api/health` ต้องเห็น `{"ok":true}`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## โครงสร้าง
 
-## Deploy on Vercel
+| ที่อยู่ | คืออะไร |
+| --- | --- |
+| `app/page.tsx` | หน้าร้าน |
+| `app/api/[[...slugs]]/route.ts` | ประตูที่ Next ส่ง request ใต้ `/api/*` ต่อให้ Elysia |
+| `server/app.ts` | API ทั้งหมดของร้าน (Elysia) |
+| `lib/` | type, ฟังก์ชันแปลงเงิน, ข้อมูลจำลอง |
+| `components/` | หน้าตาของร้าน (`ui/` มาจาก shadcn) |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Checkpoint
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+ต้นคาบแต่ละครั้ง ถ้าครั้งก่อนตามไม่ทัน ให้กระโดดไปจุดเริ่มของครั้งนั้นได้เลย
+
+| tag | ได้อะไร |
+| --- | --- |
+| `cp-0` | หน้าร้านจากข้อมูลจำลอง + `/api/health` |
+| `cp-1` | + เฉลยแล็บครั้งที่ 1 (`db/lab1.sql`) |
+
+```bash
+git stash          # เก็บงานที่ยังไม่ commit ไว้ก่อน (ถ้ามี)
+git checkout cp-1  # ไปที่ checkpoint
+```
+
+## คำสั่ง
+
+| คำสั่ง | ทำอะไร |
+| --- | --- |
+| `bun run dev` | รันตอนพัฒนา |
+| `bun run build` | build สำหรับ production |
+| `bun test` | รัน test |
