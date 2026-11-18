@@ -55,10 +55,19 @@ bun run dev
 | `cp-0` | หน้าร้านจากข้อมูลจำลอง + `/api/health` |
 | `cp-1` | + เฉลยแล็บครั้งที่ 1 (`db/lab1.sql`) |
 
+พิมพ์ทีละบรรทัด (ใช้ได้ทั้ง macOS และ Windows) — ตัวอย่างนี้กระโดดไป `cp-1` ถ้าเป็นครั้งอื่นให้เปลี่ยนเลขทั้งสองที่
+
 ```bash
-git stash          # เก็บงานที่ยังไม่ commit ไว้ก่อน (ถ้ามี)
-git checkout cp-1  # ไปที่ checkpoint
+git add -A
+git commit -m "wip"
+git fetch --tags
+git switch -c my-store-1 cp-1
+bun install
 ```
+
+- สองบรรทัดแรกเก็บงานเดิมของเราไว้ใน commit ไม่หายและไม่ขวางการสลับ (ถ้าขึ้นว่า `nothing to commit` ก็ไม่เป็นไร)
+- `git switch -c` สร้าง branch ใหม่ของเราเองจาก checkpoint — อย่าใช้ `git checkout cp-1` เฉย ๆ เพราะงานที่ commit ต่อจากนั้นจะไม่อยู่บน branch ไหนและหายได้
+- `bun install` ติดตั้ง library ที่ checkpoint นั้นใช้ (บาง checkpoint เพิ่ม library ใหม่)
 
 ## คำสั่ง
 
