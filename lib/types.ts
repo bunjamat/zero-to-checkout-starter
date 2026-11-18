@@ -4,7 +4,10 @@ export type Product = {
   id: number;
   name: string;
   description: string | null;
-  priceSatang: number;
+  // ราคาเป็นข้อความ "190.00" ตามที่คอลัมน์ numeric ส่งออกมา
+  price: string;
+  // ราคาลด ว่าง (null) = ไม่มีโปร
+  salePrice: string | null;
   imageUrl: string | null;
   stock: number;
 };

@@ -24,7 +24,14 @@ export function ProductCard({ product }: { product: Product }) {
         {product.description && <CardDescription>{product.description}</CardDescription>}
       </CardHeader>
       <CardFooter className="justify-between">
-        <span className="text-lg font-semibold">{formatBaht(product.priceSatang)}</span>
+        {product.salePrice ? (
+          <span className="flex items-baseline gap-2">
+            <span className="text-lg font-semibold text-destructive">{formatBaht(product.salePrice)}</span>
+            <s className="text-sm text-muted-foreground">{formatBaht(product.price)}</s>
+          </span>
+        ) : (
+          <span className="text-lg font-semibold">{formatBaht(product.price)}</span>
+        )}
         {soldOut ? <Badge variant="secondary">สินค้าหมด</Badge> : <Badge variant="outline">เหลือ {product.stock}</Badge>}
       </CardFooter>
     </Card>

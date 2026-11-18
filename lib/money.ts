@@ -1,7 +1,7 @@
 const baht = new Intl.NumberFormat("th-TH", { style: "currency", currency: "THB" });
 
-// ราคาทั้งระบบเก็บเป็นสตางค์ (integer) เพราะทศนิยมของ JavaScript บวกเงินแล้วเพี้ยน
-// (ลอง 0.1 + 0.2 ใน Console) จะหารเป็นบาทก็ตอนแสดงผลเท่านั้น
-export function formatBaht(satang: number): string {
-  return baht.format(satang / 100);
+// ราคามาจากคอลัมน์ numeric(10,2) ซึ่ง database ส่งมาเป็นข้อความ เช่น "190.00"
+// ส่งข้อความเข้า Intl ตรง ๆ ไม่แปลงเป็น number ก่อน ตัวเลขจึงไม่ถูกปัดเพี้ยนระหว่างทาง
+export function formatBaht(amount: string): string {
+  return baht.format(amount as Intl.StringNumericLiteral);
 }
